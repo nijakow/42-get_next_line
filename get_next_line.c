@@ -66,7 +66,7 @@ bool GNL_StringBuilder_Finalize(struct GNL_StringBuilder* builder, char** into)
     if (builder->fill == 0)
         *into = NULL;
     else {
-        result = malloc(sizeof(char) * builder->fill);
+        result = malloc(sizeof(char) * (builder->fill + 1));
         if (result == NULL)
             return false;
         index = 0;
@@ -75,6 +75,7 @@ bool GNL_StringBuilder_Finalize(struct GNL_StringBuilder* builder, char** into)
             result[index] = builder->chars[index];
             index++;
         }
+        result[index] = '\0';
         *into = result;
     }
     return true;
