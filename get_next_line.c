@@ -106,7 +106,7 @@ struct GNL_Buffer
 void GNL_Buffer_Create(struct GNL_Buffer* buffer, int fd)
 {
     buffer->initialized = true;
-    buffer->fd          = 0;
+    buffer->fd          = fd;
     buffer->read_head   = 0;
     buffer->write_head  = 0;
 }
@@ -166,7 +166,7 @@ char* get_next_line(int fd)
 
     if (fd < 0 || fd >= MAX_FD)
         return NULL;
-    else if (buffers[fd].initialized)
+    else if (buffers[fd].initialized == false)
         GNL_Buffer_Create(&buffers[fd], fd);
     return GNL_Buffer_GetNextLine(&buffers[fd]);
 }
